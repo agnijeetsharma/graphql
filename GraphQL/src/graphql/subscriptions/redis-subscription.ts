@@ -1,7 +1,9 @@
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import Redis from 'ioredis';
 
-// Define Redis connection options
+// Define Redis connection options------
+
+// <------REDIS SETUP BEFORE THE ACTUAL CONNECTION START REDIS USING WSL ---->
 const options: Redis.RedisOptions = {
   host: '127.0.0.1',
   port: 6379,
