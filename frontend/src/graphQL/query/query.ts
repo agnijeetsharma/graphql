@@ -1,7 +1,6 @@
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client";
 
-
-export const getUsers=`#graphql
+export const getUsers = `#graphql
 query Query{
     users{
     name
@@ -14,8 +13,7 @@ query Query{
     }
 }
 
-`
-
+`;
 
 export const createUser = `#graphql
   mutation CreateUser($email: String!, $password: String!, $name: String!, $role: String!) {

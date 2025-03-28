@@ -1,16 +1,13 @@
-
 // declare module "graphql-subscriptions" {
 //   interface PubSub {
 //     asyncIterator<T>(triggers: string | string[]): AsyncIterableIterator<T>;
 //   }
 // }
 
-
-
 import Usertype, { User } from "../../models/userModel.js";
 // import { PubSub } from "graphql-subscriptions";
 import { getUsers, getUserById } from "../../controllers/userController.js";
-import {pubsub} from "../subscriptions/redis-subscription.js"
+import { pubsub } from "../subscriptions/redis-subscription.js";
 import {
   getAllCourses,
   getCourseById,
@@ -18,35 +15,15 @@ import {
 } from "../../controllers/courseConroller.js";
 import { createUser } from "../../controllers/userController.js";
 
-
-// export const pubsub = new PubSub();
-
-
-// import { RedisPubSub } from 'graphql-redis-subscriptions';
-// import Redis from 'ioredis';
-// const RedisClient = Redis.default || Redis;
-
-
-// const options = {
-//   host: "127.0.0.1",
-//   port: 6379,
-// };
-// export const pubsub = new RedisPubSub({
-//   publisher: new RedisClient(options),
-//   subscriber: new RedisClient(options),
- 
-// });
-
-
 export const graphqlResolvers = {
   Mutation: {
-    createUser: async (parent: any, args: any) =>{
-      const user=await createUser(args)
-      console.log("it is subscription",user)
-      console.log("Publishing USER_CREATED event...",user); // Debugging log
+    createUser: async (parent: any, args: any) => {
+      const user = await createUser(args);
+      // console.log("it is subscription",user)
+      console.log("Publishing USER_CREATED event..."); // Debugging log
       await pubsub.publish("USER_CREATED", { userCreated: user });
       return user;
-    }
+    },
   },
   Query: {
     users: getUsers,
@@ -61,7 +38,7 @@ export const graphqlResolvers = {
   },
   Subscription: {
     userCreated: {
-      subscribe: () => pubsub.asyncIterator(["USER_CREATED"]) // ✅ Correct way
-    }
-  }
+      subscribe: () => pubsub.asyncIterator(["USER_CREATED"]),
+    },
+  },
 };

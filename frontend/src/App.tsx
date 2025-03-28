@@ -144,7 +144,7 @@ const App = () => {
           data?.users?.map((user, index:number) => (
             <div key={user.email + index}>
               <h6>Name: {user.name}</h6>
-              <h6>Email: {user.email}</h6>
+              {/* <h6>Email: {user.email}</h6> */}
             </div>
           ))
         )}
